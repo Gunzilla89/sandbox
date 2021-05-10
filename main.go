@@ -16,7 +16,7 @@ func randomString(len int) string {
 	letterByte := make([]byte, len)
 
 	for i := 0; i < len; i++ {
-		letterByte[i] = byte(randomInt(65, 90))
+		letterByte[i] = byte(randomInt(60, 90))
 	}
 
 	return string(letterByte)
