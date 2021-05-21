@@ -3,23 +3,37 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-func handlerFunc(w http.ResponseWriter, r *http.Request) {
+func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-
-	if r.URL.Path == "/" {
-		fmt.Fprint(w, "<h1>Welcome</h1>")
-	} else if r.URL.Path == "/contact" {
-		fmt.Fprint(w, "To get in touch, please send an email to <a href=\"mailto:support@lenslocked.com\">support@lenslocked.com</a>")
-	} else {
-		w.WriteHeader((http.StatusNotFound))
-		fmt.Fprint(w, "<h1>We couldn't find the page :(</h1>")
-	}
-
+	fmt.Fprint(w, "<h1>Welcome</h1>")
 }
-func main() {
-	http.HandleFunc("/", handlerFunc)
-	http.ListenAndServe(":3000", nil)
 
+func contact(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, "To get in touch, please send an email to <a href=\"mailto:support@lenslocked.com\">support@lenslocked.com</a>")
+}
+
+func faq(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, "<h1>FAQ Page</h1>")
+}
+
+func notFound(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, "<h1>Oops!</h1>")
+}
+
+func main() {
+	var notFoundHandle http.Handler = http.HandlerFunc(notFound)
+	r := mux.NewRouter()
+	r.HandleFunc("/", home)
+	r.HandleFunc("/contact", contact)
+	r.HandleFunc("/faq", faq)
+	r.NotFoundHandler = notFoundHandle
+
+	http.ListenAndServe(":3000", r)
 }
