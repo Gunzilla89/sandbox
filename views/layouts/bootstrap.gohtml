@@ -7,14 +7,16 @@
         href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         rel="stylesheet">
     </head>
-
     <body>
+        <!-- nav bar template -->
         {{template "navbar"}}
+        <!-- main container -->
         <div class="container-fluid">
-        <!-- gohtml templates-->
-        {{template "yield" .}}
+            <!-- views templates-->
+            {{template "yield" .}}
+            <!-- footer template -->
+            {{template "footer"}}
         </div>
-
         <!-- jquery & Bootstrap JS -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
         </script>
