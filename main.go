@@ -13,7 +13,6 @@ var homeView *views.View
 var contactView *views.View
 var faqView *views.View
 
-//testing comments
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	checkAndRender(homeView.Render(w, nil))
