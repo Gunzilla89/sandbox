@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/Gunzilla89/sandbox/views"
-	"github.com/gorilla/schema"
 )
 
 func NewUsers() *Users {
@@ -32,14 +31,12 @@ func (u *Users) New(w http.ResponseWriter, r *http.Request) {
 
 //create/POST
 func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		panic(err)
-	}
-	dec := schema.NewDecoder()
-	form := SignupForm{}
-	if err := dec.Decode(&form, r.PostForm); err != nil {
+	var form SignupForm
+	if err := ParseForm(r, &form); err != nil {
 		panic(err)
 	}
 
-	fmt.Fprintln(w, form)
+	fmt.Fprint(w, "Email is", form.Email)
+	fmt.Fprint(w, "Password is", form.Password)
+
 }
