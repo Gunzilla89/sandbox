@@ -11,6 +11,7 @@ var (
 	TemplateExt string = ".gohtml"
 )
 
+//finds the layout files
 func layoutFiles() []string {
 	files, err := filepath.Glob(LayoutDir + "*" + TemplateExt)
 	if err != nil {
@@ -19,6 +20,7 @@ func layoutFiles() []string {
 	return files
 }
 
+//creates the view by appending strings
 func NewView(layout string, files ...string) *View {
 	files = append(files, layoutFiles()...)
 	t, err := template.ParseFiles(files...)
@@ -37,7 +39,15 @@ type View struct {
 	Layout   string
 }
 
-func (v *View) Render(w http.ResponseWriter,
-	data interface{}) error {
+//renders the page and recieves a View reciever to access layout and template
+func (v *View) Render(w http.ResponseWriter, data interface{}) error {
+	w.Header().Set("Content-Type", "text/html")
 	return v.Template.ExecuteTemplate(w, v.Layout, data)
+}
+
+//serves the page
+func (v *View) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if err := v.Render(w, nil); err != nil {
+		panic(err)
+	}
 }

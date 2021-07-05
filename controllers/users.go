@@ -36,7 +36,7 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	fmt.Fprint(w, "Email is", form.Email)
-	fmt.Fprint(w, "Password is", form.Password)
+	fmt.Fprint(w, "Email is ", form.Email)
+	fmt.Fprint(w, "Password is ", form.Password)
 
 }
