@@ -9,7 +9,7 @@ import (
 
 func NewUsers() *Users {
 	return &Users{
-		NewView: views.NewView("bootstrap", "views/users/newUser.gohtml"),
+		NewView: views.NewView("bootstrap", "users/newUser"),
 	}
 }
 
